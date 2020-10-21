@@ -1,0 +1,2 @@
+filename	NoteIdx	Note
+FU_Ori-20201008@185200-R_10349.fts	1	fovout

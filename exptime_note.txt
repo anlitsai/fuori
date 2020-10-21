@@ -1,0 +1,37 @@
+FU_Ori
+ 1S 
+ 3S 
+ 5S 
+ 10S 
+ 15S 
+ 20S 
+ 30S 
+
+BIAS
+ 0S
+
+DARK
+ 1S 
+ 2S 
+ 3S 
+ 5S 
+ 10S 
+ 15S 
+ 20S 
+ 30S 
+
+
+FLAT
+ 1S 
+ 3S 
+ 10S 
+ 30S 
+ 4S 
+ 6S 
+ 7S 
+ 8S 
+ 9S 
+ 29S 
+
+
+

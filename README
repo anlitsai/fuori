@@ -1,0 +1,6 @@
+how to run python and output log both in terminal and logfile
+
+$ condaa
+# activate conda
+
+$ python slt_calibration_master_1month.py slt20190822 |& tee slt201908_master.log
