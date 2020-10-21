@@ -12,17 +12,17 @@ Spyder Editor
 
 generate master bias, master dark, master flat for one month.
 $ condaa
-$ python slt_calibration_science_target.py slt201908
+$ python LOT_calibration_science_target.py LOT201908
 or
-$ python slt_calibration_science_target.py slt20190822
+$ python LOT_calibration_science_target.py LOT20190822
 
 """
 
 
 
 #dir_root='/home/altsai/project/20190801.NCU.EDEN/data/gasp/'
-#dir_root='/home/altsai/gasp/lulin_data/2019/slt/'
-#dir_month='slt201908'
+#dir_root='/home/altsai/gasp/lulin_data/2019/LOT/'
+#dir_month='LOT201908'
 #date=dir_month+'22'
 #dir_master=dir_month+'_master/'
 #dir_calib_sci=date+'_calib_sci/'
@@ -58,8 +58,8 @@ year=str(yearmonth[0:4])
 month=str(yearmonth[4:6])
 
 #folder=sys.argv[1]
-#folder='slt201908'
-dir_month='slt'+yearmonth
+#folder='LOT201908'
+dir_month='LOT'+yearmonth
 #print(dir_month)
 dir_master=yearmonth+'/'+dir_month+'_master/'
 #dir_master='data/'+yearmonth+'/'+dir_month+'_master/'
@@ -166,7 +166,7 @@ print(' Master Dark (subtract from Bias) ')
 print(' ---------------------------')
 
 
-bias_list=['005S','010S','015S','020S','030S']
+bias_list=['001S','003S','005S','010S']
 
 for bias_time in bias_list:
 
@@ -244,7 +244,9 @@ master_flat={}
 #print(master_flat)
 #awk -F'PANoRot-' '{print $2}'|cut -d _ -f1
 for flat_filter in list_flat_filter:
-    cmd_search_file_flat='find ./ |grep '+dir_month+' | grep fts | grep flat | grep PANoRot-'+flat_filter
+#    cmd_search_file_flat='find ./ |grep '+dir_month+' | grep fits | grep flat | grep PANoRot-'+flat_filter
+    cmd_search_file_flat='find ./ |grep '+dir_month+' | grep fits | grep flat | grep '+flat_filter
+
     print(cmd_search_file_flat)
     list_file_flat=os.popen(cmd_search_file_flat,"r").read().splitlines()
     print('filter: ', flat_filter)

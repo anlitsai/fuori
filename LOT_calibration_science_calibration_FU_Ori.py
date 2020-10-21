@@ -11,14 +11,14 @@ Spyder Editor
 
 data calibration for science target.
 $ condaa
-$ python slt_calibration_science_target.py _FOLDER_NAME_
+$ python LOT_calibration_science_target.py _FOLDER_NAME_
 
 for example:
-$ python slt_calibration_science_target.py slt20190822
+$ python LOT_calibration_science_target.py LOT20190822
 """
 
 dir_root='/home/altsai/project/20190801.NCU.EDEN/data/gasp/'
-#dir_root='/home/altsai/gasp/lulin_data/2019/slt/'
+#dir_root='/home/altsai/gasp/lulin_data/2019/LOT/'
 
 import os
 import sys
@@ -43,10 +43,10 @@ yearmonth='202010'
 year=str(yearmonth[0:4])
 month=str(yearmonth[4:6])
 
-dir_month='slt'+yearmonth
+dir_month='LOT'+yearmonth
 
-dir_master=yearmonth+'/slt'+yearmonth+'_master/'
-#dir_master='data/'+yearmonth+'/slt'+yearmonth+'_master/'
+dir_master=yearmonth+'/LOT'+yearmonth+'_master/'
+#dir_master='data/'+yearmonth+'/LOT'+yearmonth+'_master/'
 print(dir_master)
 
 
@@ -54,10 +54,9 @@ cmd_search_folder='find ./'+yearmonth+'/ | grep '+dir_month+'[0-9][0-9]$ |cut -d
 print(cmd_search_folder)
 #list_folder=os.popen(cmd_search_folder,"r").read().splitlines()[0]
 list_folder=os.popen(cmd_search_folder,"r").read().splitlines()
-print(list_folder)
+#print(list_folder)
 
-
-dir_calib_sci=yearmonth+'/slt'+yearmonth+'_calib_sci/'
+dir_calib_sci=yearmonth+'/LOT'+yearmonth+'_calib_sci/'
 
 print(dir_calib_sci)
 if os.path.exists(dir_calib_sci):
@@ -157,12 +156,12 @@ for i in list_file_sci:
     cmd_search_file_dark='find ./'+dir_master+' | grep fits | grep master_dark|grep '+idx_time
     print(cmd_search_file_dark)
     file_master_dark=os.popen(cmd_search_file_dark,"r").read().splitlines()[0]
-#    print(file_master_dark)
+    print(file_master_dark)
 
     data_dark=fits.open(file_master_dark)[0].data
 
     select_master_dark=data_dark
-    print('dark file : ', select_master_dark)
+#    print('dark file : ', select_master_dark)
 
     print('... load master flat ...')
 #    print(cmd_search_file_flat)
@@ -180,8 +179,8 @@ for i in list_file_sci:
     data_flat=fits.open(file_flat_filter)[0].data
     select_master_flat=data_flat
     sci_flat=(imdata-master_bias-select_master_dark)/select_master_flat
-    cmd_sci_name='echo '+i+' | cut -d / -f6 | cut -d . -f1'
-#    print(cmd_sci_name)
+    cmd_sci_name='echo '+i+' | cut -d / -f5 | cut -d . -f1'
+    print(cmd_sci_name)
     sci_name=os.popen(cmd_sci_name,"r").read().splitlines()[0]
 #    print(sci_name)
 #    plt.title(sci_name)
