@@ -3,4 +3,13 @@ how to run python and output log both in terminal and logfile
 $ condaa
 # activate conda
 
-$ python slt_calibration_master_1month.py slt20190822 |& tee slt201908_master.log
+$ python search_no_wcs_FUOri.py 202010
+$ python slt_calibration_master_1month.py  
+$ python slt_calibration_science_calibration_FUOri.py
+$ vi RefStar_FUOri_annu_mod_fk5.reg
+$ python slt_refStar_radec_annu.py
+$ slt_target_fitsheader_info_exclude_baddata_permonth.py 202010
+$ Rmag_aperture_annulus_r_file_median_w1_subplot_date_FU_Ori.py
+
+
+
