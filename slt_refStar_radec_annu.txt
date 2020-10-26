@@ -1,7 +1,7 @@
-|IAU_Name|ObjectName|RA_hhmmss|DEC_ddmmss|Redshift|RefStarregname|RefStarID|RefStarRA_hhmmss|RefStarDEC_ddmmss|RefStarRA_deg|RefStarDEC_deg|R_circle_as|R_inner_as|R_outer_as|Vmag|Vmag_err|Rmag|Rmag_err|NoteIdx|Note
-0|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|FU_Ori|5:45:22.316|+9:04:11.00|86.3430|9.0697|25|38|43|-9999.000|-9999.000|-9999.000|-9999.000|0|star
-1|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|A|5:45:42.357|+9:07:46.73|86.4265|9.1296|10|15|20|14.000|0.002|13.000|0.002|1|recommend
-2|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|B|5:45:28.873|+9:01:44.15|86.3703|9.0289|10|15|20|14.000|0.002|13.000|0.002|1|recommend
-3|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|C|5:45:21.561|+8:58:40.61|86.3398|8.9779|10|15|20|14.000|0.002|13.000|0.002|1|recommend
-4|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|D|5:45:13.884|+9:04:44.11|86.3078|9.0789|10|15|20|14.000|0.002|13.000|0.002|1|recommend
-5|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|E|5:45:02.521|+9:03:49.47|86.2605|9.0637|10|15|20|14.000|0.002|13.000|0.002|1|recommend
+|IAU_Name|ObjectName|RA_hhmmss|DEC_ddmmss|Redshift|RefStarregname|RefStarID|RefStarRA_hhmmss|RefStarDEC_ddmmss|RefStarRA_deg|RefStarDEC_deg|R_circle_as|R_inner_as|R_outer_as|Vmag|Vmag_err|Rmag|Rmag_err|Bmag|Bmag_err|NoteIdx|Note
+0|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|FU_Ori|5:45:22.316|+9:04:11.00|86.3430|9.0697|25|38|43|-9999.000|-9999.000|-9999.000|-9999.000|-9999.0|-9999|0.0|star
+1|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|A|5:45:42.357|+9:07:46.73|86.4265|9.1296|15|20|25|14.000|0.002|13.000|0.002|12.0|0.002|1.0|recommend
+2|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|B|5:45:28.873|+9:01:44.15|86.3703|9.0289|15|20|25|14.000|0.002|13.000|0.002|12.0|0.002|1.0|recommend
+3|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|C|5:45:21.561|+8:58:40.61|86.3398|8.9779|15|20|25|14.000|0.002|13.000|0.002|12.0|0.002|1.0|recommend
+4|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|D|5:45:13.884|+9:04:44.11|86.3078|9.0789|15|20|25|14.000|0.002|13.000|0.002|12.0|0.002|1.0|recommend
+5|FU_Orions|FU_Ori|05:45:22.3|+09:04:11|0.0000|RefStar_FU_Ori_annu_mod_fk5.reg|E|5:45:02.521|+9:03:49.47|86.2605|9.0637|15|20|25|14.000|0.002|13.000|0.002|12.0|0.002|1.0|recommend

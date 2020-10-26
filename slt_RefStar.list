@@ -1,11 +1,11 @@
 # http://www.oato.inaf.it/blazars/webt/gasp/list.html
 # LOT fitsimage @ds9 : invert Y, rotate 90deg or 270deg
 # ds9 region files: RefStars_ObjectName_fk5.reg
-IAU_Name	ObjectName	RA_hhmmss	DEC_ddmmss	Redshift	RefStarID	Vmag	Vmag_err	Rmag	Rmag_err	NoteIdx	Note
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	FU_Ori	-9999	-9999	-9999	-9999	0	star
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	A	14.000	0.002	13.000	0.002	1	recommend
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	B	14.000	0.002	13.000	0.002	1	recommend
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	C	14.000	0.002	13.000	0.002	1	recommend
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	D	14.000	0.002	13.000	0.002	1	recommend
-FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	E	14.000	0.002	13.000	0.002	1	recommend
+IAU_Name	ObjectName	RA_hhmmss	DEC_ddmmss	Redshift	RefStarID	Vmag	Vmag_err	Rmag	Rmag_err	Bmag	Bmag_err	NoteIdx	Note
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	FU_Ori	-9999	-9999	-9999	-9999	-9999	-9999	0	star
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	A	14.000	0.002	13.000	0.002	12.000	0.002	1	recommend
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	B	14.000	0.002	13.000	0.002	12.000	0.002	1	recommend
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	C	14.000	0.002	13.000	0.002	12.000	0.002	1	recommend
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	D	14.000	0.002	13.000	0.002	12.000	0.002	1	recommend
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	E	14.000	0.002	13.000	0.002	12.000	0.002	1	recommend
 FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	bkg	-9999	-9999	-9999	-9999	-1	background
