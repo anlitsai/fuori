@@ -1,4 +1,3 @@
 filename	NoteIdx	Note
 FU_Ori-20201008@185200-R_10349.fts	1	fovout
 FU_Ori-20201007@185500-R_Astrodon_2018_calib.fits	2	moon
-
