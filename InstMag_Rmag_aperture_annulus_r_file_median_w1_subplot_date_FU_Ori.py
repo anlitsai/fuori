@@ -158,6 +158,10 @@ print('-----------------------')
 #filter_ID=sys.argv[3]
 df_info['DateObs'] = pd.to_datetime(df_info['DateObs'])
 idx_fitsheader=df_info[((df_info['Object']==obj_name)|(df_info['Object'].str.contains(obj_name))) & (df_info['FilterName'].str.contains(filter_ID)) & (df_info['DateObs']>=date_from) & (df_info['DateObs']<=date_end)].index
+#idx_fitsheader_LOT=df_info[(df_info['Telescope']=='LOT')& ((df_info['Object']==obj_name)|(df_info['Object'].str.contains(obj_name))) & (df_info['FilterName'].str.contains(filter_ID)) & (df_info['DateObs']>=date_from) & (df_info['DateObs']<=date_end)].index
+#print('idx_fitsheader_LOT',idx_fitsheader_LOT)
+#sys.exit(0)
+
 
 #print('obj_name: ', obj_name, type(obj_name))
 #print('filter_ID: ', filter_ID, type(filter_ID))
@@ -278,6 +282,7 @@ JD=df_info['JD'][idx_fitsheader]
 #print(JD)
 ID=df_info['ID'][idx_fitsheader] 
 #print(ID)
+Telescope=df_info['Telescope'][idx_fitsheader] 
 
 #sys.exit(0)
 #=======================
@@ -636,6 +641,7 @@ print()
 
 df_out=df_info.iloc[idx_fitsheader_canfit]
 pd.options.mode.chained_assignment = None  # default='warn'
+df_out['Telescope']=Telescope
 df_out['JD']=df_out['JD'].map('{:.5f}'.format)
 #df_out['Rmag']=pd.Series(Rmag_targets,index=df_out.index)
 df_out['Rmag']=Rmag_targets
@@ -788,6 +794,19 @@ print('... write file to: ./'+file_Rmag_out_keep)
 # -----------------------------------
 #sys.exit(0)
 
+dir_obj='InstMag_'+filter_ID+'mag/annu_w1_'+date1+'-'+date2+'/'+obj_name+'/'
+file_Rmag_annu=dir_obj+'Rmag_aperture_FU_Ori_annu.txt'
+df_Rmag_annu=pd.read_csv(file_Rmag_annu,delimiter='|')
+
+idx_Rmag_annu_LOT=df_Rmag_annu[(df_Rmag_annu['Telescope']=='LOT')].index
+print('idx_Rmag_annu_LOT',idx_Rmag_annu_LOT)
+
+JD_LOT=df_Rmag_annu['JD'][idx_Rmag_annu_LOT]
+print('JD_LOT',JD_LOT)
+rmag_fitting_LOT=df_Rmag_annu['Rmag'][idx_Rmag_annu_LOT]
+print('rmag_fitting_LOT',rmag_fitting_LOT)
+#sys.exit(0)
+
 
 # -----------------------------------
 fig2=plt.figure(figsize=(6,8))
@@ -817,6 +836,7 @@ for i in range(n_refstar):
     if i==0:
         print('i=',i)
         plt.errorbar(JD,rmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='.',color='red',linestyle='none')
+        plt.scatter(JD_LOT,rmag_fitting_LOT)
 #        plt.errorbar(JD,rmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='o',color='red',linestyle='none',fmt='+', mfc='white')
 #	plt.errorbar(JD,Rmag_targets,yerr=err_mag_total_per_img,label=label_target,fmt='o')
     else:
@@ -826,15 +846,7 @@ for i in range(n_refstar):
 #        plt.axhline(y=rmag[i]+0.1,color=colors[i],linestyle='--',lw=1)
         plt.scatter(JD,rmag_fitting[:,i],label=str(refstarID[i]),marker=markers[i],color=colors[i],facecolors='none')
         
-        
 
-#	print(i)
-#	plt.scatter(JD,rmag_fitting[:,i],label=label_source[:,i],fmt='o')
-#        plt.scatter(JD,rmag_fitting[:,i],label=str(refstarID[i]),marker='o')
-#        plt.axhline(y=rmag[1:])
-#	plt.axhline(JD,rmag[1:],linestyle='-')
-#	for j in range(k):
-#	    plt.scatter(JD,rmag_fitting[k][i],label=label_source[k][i],fmt='o')
 #plt.plot(JD,Rmag_targets,'-')
         
 #axs[0].set_xlabel('JD',fontsize=font_small)

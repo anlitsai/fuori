@@ -144,6 +144,7 @@ plt.scatter(JD_R,InstMagR_E, label='E')
 
 plt.legend(loc='right')
 
+#plt.savefig('InstMag_JD_FU_Ori_RefStar_annu.pdf',dpi=200)
 
 #plt.savefig(dir_obj+'Rmag_JD_'+obj_name+'_RefStar_annu.png',dpi=200)
 #plt.savefig(dir_obj+'Rmag_JD_'+obj_name+'_RefStar_annu.pdf')

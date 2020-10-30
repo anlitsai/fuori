@@ -77,8 +77,8 @@ print(till_month)
 #dir_calib_sci=folder+'_calib_sci/'
 #print(dir_calib_sci)
 
-#yearmonth='202003'
-yearmonth=sys.argv[1]
+yearmonth='202010'
+#yearmonth=sys.argv[1]
 
 file_info='slt_target_fitsheader_info_exclude_baddata_'+yearmonth+'.txt'
 #file_info='slt_target_fitsheader_info_exclude_baddata_202002.txt'
@@ -250,7 +250,7 @@ f_log.write(str(list_baddata)+'\n')
 
 #sys.exit(0)
 
-head_info='ID|DateObs|TimeObs|Filename|Object|RA_hhmmss|DEC_ddmmss|RA_deg|DEC_deg|RA_pix|Dec_pix|FilterName|JD|ExpTime_sec|Zmag|FWHM|Altitude|Airmass'
+head_info='ID|DateObs|TimeObs|Telescope|Filename|Object|RA_hhmmss|DEC_ddmmss|RA_deg|DEC_deg|RA_pix|Dec_pix|FilterName|JD|ExpTime_sec|Zmag|FWHM|Altitude|Airmass'
 #head_info='1.ID|2.DateObs|3.TimeObs|4.Filename|5.Object|6.RA_hhmmss|7.DEC_ddmmss|8.RA_deg|9.DEC_deg|10.RA_pix|11.Dec_pix|12.FilterName|13.JD|14.ExpTime_sec|15.Zmag|16.FWHM|17.Altitude|18.Airmass'
 
 f_info.write(head_info+'\n')
@@ -285,10 +285,15 @@ for i in list_file_sci:
         jd=imhead['JD']
         filter_name=imhead['FILTER']
         obj=imhead['OBJECT']
+        telescope=imhead['TELESCOP']
+        if 'LOT' not in telescope:
+            telescope='SLT'
+#        print('telescope',telescope)
         try: 
             fwhm=imhead['FWHM']
         except KeyError:
             fwhm=-9999
+
         try:
             zmag=imhead['ZMAG']
         except KeyError:
@@ -318,9 +323,9 @@ for i in list_file_sci:
         sci_filter=os.popen(cmd_sci_filter,"r").read().splitlines()[0]
 #        print(sci_filter)
         idx_filter_time=sci_filter+"_"+idx_time
-        info_sci=str(k)+' [DATE] '+date_obs+ ' [TIME] '+time_obs+' [FILE] '+str(filename_sci)+' [OBJ] '+str(obj)+' [RA_hhmmss] '+ra_hhmmss+' [DEC_ddmmss] '+dec_ddmmss+' [RA_deg] '+str(ra_deg)+' [DEC_deg] '+str(dec_deg)+' [ra_pix] '+str(ra_pix)+' [dec_pix] '+str(dec_pix)+' [FIL] '+filter_name+' [JD] '+str(jd)+' [EXPTIME] '+str(exptime)+' [ZMAG] '+str(zmag)+' [FWHM] '+str(fwhm)+' [ALT] '+str(altitude)+' [AIRMASS] '+str(airmass)
+        info_sci=str(k)+' [DATE] '+date_obs+ ' [TIME] '+time_obs+' [TELESCOPE] '+telescope+' [FILE] '+str(filename_sci)+' [OBJ] '+str(obj)+' [RA_hhmmss] '+ra_hhmmss+' [DEC_ddmmss] '+dec_ddmmss+' [RA_deg] '+str(ra_deg)+' [DEC_deg] '+str(dec_deg)+' [ra_pix] '+str(ra_pix)+' [dec_pix] '+str(dec_pix)+' [FIL] '+filter_name+' [JD] '+str(jd)+' [EXPTIME] '+str(exptime)+' [ZMAG] '+str(zmag)+' [FWHM] '+str(fwhm)+' [ALT] '+str(altitude)+' [AIRMASS] '+str(airmass)
 #        print(info_sci)
-        info_write=str(idx)+'|'+date_obs+'|'+time_obs+'|'+ str(filename_sci)+'|'+str(obj)+'|'+ra_hhmmss+'|'+dec_ddmmss+'|'+str('%.4f' %ra_deg)+'|'+str('%.4f' %dec_deg)+'|'+str('%.4f' %ra_pix)+'|'+str('%.4f' %dec_pix)+'|'+filter_name+'|'+str(jd)+'|'+str(exptime)+'|'+str('%.4f' %zmag)+'|'+str('%.4f' %fwhm)+'|'+str('%.4f' %altitude)+'|'+str('%.4f' %airmass)
+        info_write=str(idx)+'|'+date_obs+'|'+time_obs+'|'+telescope+'|'+ str(filename_sci)+'|'+str(obj)+'|'+ra_hhmmss+'|'+dec_ddmmss+'|'+str('%.4f' %ra_deg)+'|'+str('%.4f' %dec_deg)+'|'+str('%.4f' %ra_pix)+'|'+str('%.4f' %dec_pix)+'|'+filter_name+'|'+str(jd)+'|'+str(exptime)+'|'+str('%.4f' %zmag)+'|'+str('%.4f' %fwhm)+'|'+str('%.4f' %altitude)+'|'+str('%.4f' %airmass)
         f_log.write(info_sci+'\n')
         f_info.write(info_write+'\n')
     else:
