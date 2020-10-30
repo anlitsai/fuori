@@ -373,15 +373,6 @@ for i in idx_fitsheader_canfit:
 #    print(ra_pix,dec_pix)
 #    print()
 
-
-#    mask=np.array
-
-#    background level and error
-#    using FWHM
-#    sigma_fwhm=fwhm[k]/2.35
-#    print(k,fwhm[k],sigma_fwhm)
-
-
 #    using the median absolute deviation to estimate the background noise level gives a value
 #    bkg_noise=mad_std(imdata)
 #    print(bkg_noise)
@@ -396,12 +387,7 @@ for i in idx_fitsheader_canfit:
     
     bkg_err_ratio[k]=bkg_std/bkg_median
     print('... bkg_err_ratio = bkg_std/bkg_median =','%.4f' %bkg_err_ratio[k])    
-#    bkg_err[k]=-2.5*np.log10(bkg_std/bkg_median)
-#    print('bkg_err (mag)',bkg_err[k])  
-#    1176.6646745343921 1176.0827349796416 39.1334108277639
-#    np.argwhere(np.isnan(imdata))
-#    time.sleep(1)
-#    print(WCS.world_axis_physical_types)
+
     err_imdata=bkg_err_ratio[k]*imdata
     print()
     
@@ -417,10 +403,7 @@ for i in idx_fitsheader_canfit:
         r_in_pix=aper_annu_pix[j1].r_in
         r_out_pix=aper_annu_pix[j1].r_out
 #        print(r_in_pix,r_out_pix)
-#        position_pix=(ra_pix[j1],dec_pix[j1])
-#        position_pix=np.transpose(positions_pix)
-#        r_pix=aperture_pix[i].r        
-#       print('r_pix =',r_pix)
+
         apper=[aperture_pix[j1],aper_annu_pix[j1]]
 #        phot_annu_table = aperture_photometry(imdata, apper)
         phot_annu_table = aperture_photometry(imdata, apper,error=err_imdata)
@@ -497,21 +480,6 @@ for i in idx_fitsheader_canfit:
         mag_instrument_err[k][j1]=abs(mag_instrument_sum_err[k][j1]-mag_instrument[k][j1])
         print('... mag_instrument (err) =','%.4f' %mag_instrument_err[k][j1])
 
-#        bg_subtracted_sum_err_p[k][j1]=bg_subtracted_sum[k][j1]+bg_subtracted_err[k][j1]
-#        mag_instrument_sum_err_p[k][j1]=-2.5*np.log10(bg_subtracted_sum_err_p[k][j1])
-#        print('... mag_instrument_sum+err =','%.4f' %mag_instrument_sum_err_p[k][j1])
-#        mag_instrument_err_p[k][j1]=abs(mag_instrument_sum_err_p[k][j1]-mag_instrument[k][j1])
-#        print('... mag_instrument+err =','%.4f' %mag_instrument_err_p[k][j1])
-        
-#        bg_subtracted_sum_err_m[k][j1]=bg_subtracted_sum[k][j1]-bg_subtracted_err[k][j1]
-#        mag_instrument_sum_err_m[k][j1]=-2.5*np.log10(bg_subtracted_sum_err_m[k][j1])
-#        print('... mag_instrument_sum-err =','%.4f' %mag_instrument_sum_err_m[k][j1])
-#        mag_instrument_err_m[k][j1]=abs(mag_instrument_sum_err_m[k][j1]-mag_instrument[k][j1])
-#        print('... mag_instrument-err =','%.4f' %mag_instrument_err_p[k][j1])        
-
-#        aper_sum_err0[k][j1]=phot_annu_table['aperture_sum_err_0']
-#        aper_sum_err1[k][j1]=phot_annu_table['aperture_sum_err_1']
-        print()
             
         for col in phot_annu_table.colnames:
             phot_annu_table[col].info.format = '%.8g'  # for consistent table output
@@ -521,10 +489,7 @@ for i in idx_fitsheader_canfit:
 #    print(phot_annu_table.colnames)
     print('=================================')
 
-#    bg_subtracted_sum_mean,bg_subtracted_sum_median,bg_subtracted_sum_std=sigma_clipped_stats(bg_subtracted_sum,sigma=3.)
-#    print('bg_subtracted_sum_mean,bg_subtracted_sum_median,bg_subtracted_sum_std')
-#    print(bg_subtracted_sum_mean,bg_subtracted_sum_median,bg_subtracted_sum_std)
-    
+ 
 
 #    print('bg_subtracted_err[k]')
 #    print(bg_subtracted_err[k])
@@ -534,6 +499,8 @@ for i in idx_fitsheader_canfit:
     print('... magnitude error after background subtraction (mag):','%.4f' %err_mag_instrument_per_img[k])  
 
 
+    print('Instrument Mag of FU_Ori',mag_instrument[k][0])
+#    print('Instrument Mag of RefStars',mag_instrument[k][1:])
 
 #    print('Instrument Mag of RefStars',mag_instrument[k][1:])
 #    print('Bmag of RefStars',bmag[1:])    
@@ -547,66 +514,21 @@ for i in idx_fitsheader_canfit:
     res_least_sq_fit=res[0]
     print('... residual least squre fitting',res_least_sq_fit)
 
-#    residual=res[0].tolist()[0]
-#    print('shift =','%.3f' %shift)
-#    print('slope =','%.3f' %slope)
-#    print('residual =', residual)
 
     bmag_fitting[k]=shift+slope*mag_instrument[k]
     print('... bmag_fitting (Ref.Stars only):',bmag_fitting[k][1:])
     print('... bmag_fitting (Target only):',bmag_fitting[k][0])
     
     Bmag_targets[k]=bmag_fitting[k][0]
-
-#    SN=signal_mean/signal_std
-#    SN=bkg_mean/bkg_std ??    
-#    ErrorBmag=2.5*log10(1+N/S)=1.086/(S/N)
-#    signal=final_sum
-#    noise=bkg_std*aperture_pix[i].area
-#    mag_err=1.086/snr
-
-    
-#    Bmag_err_targets[k]=mag_err[0]
-
- 
-    
-
-#    snr=mask_median/bkg_std
-#    snr=bg_subtracted_sum/aperture_pix[j1].area/bkg_std
-#    snr=10
-#    mag_err=1.086/snr
-    
-#    print('snr',snr)
-#    print('mag_err',mag_err)
-#    mag_err_target=mag_err
-#    Bmag_err_targets[k]=mag_err
-#    SNR_targets[k]=snr 
-
-
-#    refstar_ra_pix,refstar_dec_pix=wcs.all_world2pix(refstarRA_deg,refstarDEC_deg,1)
-#    refstar_ra_pix=refstar_ra_pix.tolist()
-#    refstar_dec_pix=refstar_dec_pix.tolist()
- 
-    
     
     figtitle='(ID='+str(ID[i])+', JD='+str('%.0f' %JD[i])+') '+fits_ori[i]
 
             
     fig1=plt.figure(figsize=(8,4))
     fig1.suptitle(figtitle,fontsize=font_middle)
-#    fig1 = plt.figure(constrained_layout=True)
-#    widths = [1,1]
-#    heights = [1]
-#    spec1 = fig1.add_gridspec(ncols=len(widths), nrows=len(heights), width_ratios=widths,
-#                          height_ratios=heights)
-    
-#    fig1,axs=plt.subplots(1,2)
-#    axs=fig1.add_subplot(1,2,1)
-    plt.subplot(121)
-#    plt.tight_layout(rect=[0,0,1,1])
 
-#    plt.figure(dpi=200)
-#    if change ra,dec of reference star, run 'slt_refStar_radec.py again.    
+    plt.subplot(121)
+  
     norm = simple_norm(imdata, 'sqrt', percent=99)
     plt.imshow(imdata, norm=norm)
 #    im=axs[0].imshow(imdata,original='lower',norm=norm)
@@ -640,6 +562,7 @@ for i in idx_fitsheader_canfit:
 
     plt.subplot(122,aspect=0.5)
 
+    
     d_bmag_fitting=bmag[1:]-bmag_fitting[k][1:]
     print('... fitting residual:',d_bmag_fitting)
 
@@ -723,12 +646,23 @@ df_out['Counts']=bg_subtracted_sum[:,0]
 df_out['Counts']=df_out['Counts'].map('{:.4f}'.format)
 df_out['ErrorCounts']=err_count_per_img
 df_out['ErrorCounts']=df_out['ErrorCounts'].map('{:.4f}'.format)
-df_out['InstMag']=mag_instrument[:,0]
-df_out['InstMag']=df_out['InstMag'].map('{:.4f}'.format)
-df_out['ErrorInstMag']=err_mag_instrument_per_img
-df_out['ErrorInstMag']=df_out['ErrorInstMag'].map('{:.4f}'.format)
-df_out['ErrorFitting']=err_mag_fitting_per_img
-df_out['ErrorFitting']=df_out['ErrorFitting'].map('{:.4f}'.format)
+
+df_out['InstMag_FU_Ori']=mag_instrument[:,0]
+df_out['InstMag_FU_Ori']=df_out['InstMag_FU_Ori'].map('{:.4f}'.format)
+df_out['ErrorInstMag_FU_Ori']=err_mag_instrument_per_img
+df_out['ErrorInstMag_FU_Ori']=df_out['ErrorInstMag_FU_Ori'].map('{:.4f}'.format)
+#df_out['ErrorFitting']=err_mag_fitting_per_img
+#df_out['ErrorFitting']=df_out['ErrorFitting'].map('{:.4f}'.format)
+df_out['InstMag_A']=mag_instrument[:,1]
+df_out['InstMag_A']=df_out['InstMag_A'].map('{:.4f}'.format)
+df_out['InstMag_B']=mag_instrument[:,2]
+df_out['InstMag_B']=df_out['InstMag_B'].map('{:.4f}'.format)
+df_out['InstMag_C']=mag_instrument[:,3]
+df_out['InstMag_C']=df_out['InstMag_C'].map('{:.4f}'.format)
+df_out['InstMag_D']=mag_instrument[:,4]
+df_out['InstMag_D']=df_out['InstMag_D'].map('{:.4f}'.format)
+df_out['InstMag_E']=mag_instrument[:,5]
+df_out['InstMag_E']=df_out['InstMag_E'].map('{:.4f}'.format)
 
 
 
