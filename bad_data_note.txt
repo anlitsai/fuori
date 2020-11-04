@@ -4,3 +4,4 @@ FU_Ori-20201007@185500-R_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185651-_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185430-V_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185621-V_Astrodon_2018_calib.fits	2	moon
+
