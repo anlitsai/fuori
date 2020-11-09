@@ -1,5 +1,12 @@
 # Step-by-step of how to run scripts for data taken every month
 
+vi RefStar_FU_Ori_annu_mod_fk5.reg
+vi slt_RefStar.list
+
+python slt_refStar_radec_annu.py
+
+
+
 #a='202003'  
 a=$1
 

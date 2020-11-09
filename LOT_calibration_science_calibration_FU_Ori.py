@@ -49,12 +49,11 @@ dir_master=yearmonth+'/LOT'+yearmonth+'_master/'
 #dir_master='data/'+yearmonth+'/LOT'+yearmonth+'_master/'
 print(dir_master)
 
-
 cmd_search_folder='find ./'+yearmonth+'/ | grep '+dir_month+'[0-9][0-9]$ |cut -d / -f3|sort|uniq'
 print(cmd_search_folder)
 #list_folder=os.popen(cmd_search_folder,"r").read().splitlines()[0]
 list_folder=os.popen(cmd_search_folder,"r").read().splitlines()
-#print(list_folder)
+print(list_folder)
 
 dir_calib_sci=yearmonth+'/LOT'+yearmonth+'_calib_sci/'
 
@@ -86,7 +85,7 @@ print(' ---------------------------')
 cmd_search_file_bias='find ./ | grep '+dir_master+' | grep fits | grep master_bias'
 print(cmd_search_file_bias)
 file_bias=os.popen(cmd_search_file_bias,"r").read().splitlines()[0]
-print(file_bias)
+print('BIAS file:', file_bias)
 #sys.exit(0)
 
 master_bias=fits.open(file_bias)[0].data
@@ -101,11 +100,11 @@ print(' Load Master Dark ')
 print(' ---------------------------')
 
 cmd_search_file_dark='find ./ | grep '+dir_master+' | grep fits | grep master_dark'
-#print(cmd_search_file_dark)
+print(cmd_search_file_dark)
 list_file_dark=os.popen(cmd_search_file_dark,"r").read().splitlines()
-print(list_file_dark)
+print('list DARK files:',list_file_dark)
 n_file_dark=len(list_file_dark)
-print(n_file_dark)
+print('# of DARK files:', n_file_dark)
 
 #master_dark=fits.open(file_dark)[0].data
 
@@ -117,10 +116,13 @@ print(' ---------------------------')
 
 print(dir_month)
 cmd_search_file_sci="find ./ | grep "+dir_month+" | grep 'fts\|new' | grep FU_Ori "
+print(cmd_search_file_sci)
 list_file_sci=os.popen(cmd_search_file_sci,"r").read().splitlines()
+print('list SCI files:', list_file_sci)
+n_file_sci=len(list_file_sci)
+print('# of SCI files', n_file_sci)
 print('...calibrating science targets...')
-#print(list_file_sci)
-#print(len(list_file_sci))
+
 #sys.exit(0)
 
 #calib_sci={}
@@ -134,7 +136,6 @@ for i in list_file_sci:
     exptime=imhead['EXPTIME']
     idx_time=str(int(exptime))+'S'
     print('exposure time : ', idx_time)
-#    print(exptime)
 #    naxis=imhead['NAXIS']
 #    print(naxis)
     jd=imhead['JD']
@@ -152,11 +153,12 @@ for i in list_file_sci:
     ra=imhead['RA']
     dec=imhead['Dec']
     filter_name=imhead['FILTER']    
-    
+
+    print('... load master dark ...')    
     cmd_search_file_dark='find ./'+dir_master+' | grep fits | grep master_dark|grep '+idx_time
     print(cmd_search_file_dark)
     file_master_dark=os.popen(cmd_search_file_dark,"r").read().splitlines()[0]
-    print(file_master_dark)
+    print('selected DARK file:', file_master_dark)
 
     data_dark=fits.open(file_master_dark)[0].data
 
@@ -172,7 +174,7 @@ for i in list_file_sci:
     cmd_search_file_flat_filter='find ./'+dir_master+' | grep fits | grep master_flat|grep '+sci_filter
     print(cmd_search_file_flat_filter)
     file_flat_filter=os.popen(cmd_search_file_flat_filter,"r").read().splitlines()[0]
-    print('find flat file : ', file_flat_filter)
+    print('selected FLAT file : ', file_flat_filter)
 
     print('... master flat file is: '+file_flat_filter+' ...')
 
@@ -192,12 +194,12 @@ for i in list_file_sci:
     fitsname_calib_sci=sci_name+'_calib.fits'
     #hdu=fits.PrimaryHDU(calib_sci[i])
     fits.writeto(dir_calib_sci+fitsname_calib_sci,data=sci_flat,header=imhead,overwrite=True)
-
+    print(' ')
     
 #sys.exit(0)
 
 
-print(' ---------------------------')
+print('---------------------------')
 
 time_calib=str(datetime.now())
 print('...finish calibration at '+time_calib+' UTC+8...')

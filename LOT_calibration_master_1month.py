@@ -170,7 +170,6 @@ bias_list=['001S','003S','005S','010S']
 
 for bias_time in bias_list:
 
-
     cmd_search_dark='find ./ |grep '+dir_month+' | grep fts | grep Dark | grep '+bias_time
     print(cmd_search_dark)
     list_file_dark=os.popen(cmd_search_dark,"r").read().splitlines()
@@ -213,10 +212,6 @@ for bias_time in bias_list:
     del list_file_dark
     del array_dark
 
-
-
-
-
 #sys.exit(0)
 
 print(' ---------------------------')
@@ -233,7 +228,6 @@ print(' ---------------------------')
 #list_flat_filter=['R']
 #for i in list_flat_filter:
 #    print('filter',i)
-
 
 #sys.exit(0)
 
