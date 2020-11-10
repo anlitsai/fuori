@@ -67,8 +67,8 @@ print(date)
 print(type(date))
 yearmonth=date[0:6]
 '''
-#filter_name='B_Astrodon_2018'
-filter_ID='B'
+#filter_name='R_Astrodon_2018'
+filter_ID='V'
 #filter_ID=sys.argv[1]
 
 #date1=input("From which date you are going to process (ex: 20190810)? ")
@@ -82,8 +82,8 @@ date_from = datetime.datetime(int(date1[0:4]),int(date1[4:6]),int(date1[6:8]))
 date_end = datetime.datetime(int(date2[0:4]),int(date2[4:6]),int(date2[6:8]))
 info_date=('... will process '+filter_ID+' mag '+date1+' to '+date2+' ...')
 
-#file_info='slt_target_fitsheader_info.txt'
-#file_info='slt_target_fitsheader_info_exclude_baddata_join.txt'
+#file_info='LOT_target_fitsheader_info.txt'
+#file_info='LOT_target_fitsheader_info_exclude_baddata_join.txt'
 file_info='slt_target_fitsheader_info_exclude_baddata_202010.txt'
 print('... will read '+file_info+' ...')
 df_info=pd.read_csv(file_info,delimiter='|')
@@ -94,7 +94,7 @@ print('obj_name : ', obj_name)
 
 
 #dir_obj=filter_ID+'mag_InstMag/annu_w1_'+date1+'-'+date2+'/*'+obj_name+'/'
-dir_obj='InstMag_'+filter_ID+'mag/'
+dir_obj='ABE_LOT_InstMag_'+filter_ID+'mag/annu_w1_'+date1+'-'+date2+'/'+obj_name+'/'
 
 print('... will generate files in: ./'+dir_obj)
 if os.path.exists(dir_obj):
@@ -102,8 +102,8 @@ if os.path.exists(dir_obj):
 os.makedirs(dir_obj,exist_ok=True)
 
 #dir_refstar='RefStar/'
-#file_refstar='slt_refStar_radec_annu_test.txt'
-file_refstar='slt_refStar_radec_annu.txt'
+#file_refstar='LOT_refStar_radec_annu_test.txt'
+file_refstar='LOT_refStar_radec_annu_ABE.txt'
 
 df_refstar=pd.read_csv(file_refstar,sep='|')
 #print(df_refstar)
@@ -125,9 +125,9 @@ radec_deg=np.array([[0.,0.]]*n_refstar)
 ra_hhmmss=['']*n_refstar
 dec_ddmmss=['']*n_refstar
 
-bmag=np.array([0.]*n_refstar)
-bmag_err=np.array([0.]*n_refstar)
-bmag_uplims=np.array([0.]*n_refstar,dtype=bool)
+vmag=np.array([0.]*n_refstar)
+vmag_err=np.array([0.]*n_refstar)
+vmag_uplims=np.array([0.]*n_refstar,dtype=bool)
 #mag_instrument=np.array([0.]*n_refstar)
 #mag_err=np.array([0.]*n_refstar)
 #snr=np.array([0.]*n_refstar)
@@ -157,11 +157,7 @@ print('-----------------------')
 #filter_ID='R'
 #filter_ID=sys.argv[3]
 df_info['DateObs'] = pd.to_datetime(df_info['DateObs'])
-idx_fitsheader=df_info[((df_info['Object']==obj_name)|(df_info['Object'].str.contains(obj_name))) & (df_info['FilterName'].str.contains(filter_ID)) & (df_info['DateObs']>=date_from) & (df_info['DateObs']<=date_end)].index
-#idx_fitsheader_LOT=df_info[(df_info['Telescope']=='LOT')& ((df_info['Object']==obj_name)|(df_info['Object'].str.contains(obj_name))) & (df_info['FilterName'].str.contains(filter_ID)) & (df_info['DateObs']>=date_from) & (df_info['DateObs']<=date_end)].index
-#print('idx_fitsheader_LOT',idx_fitsheader_LOT)
-#sys.exit(0)
-
+idx_fitsheader=df_info[ (df_info['Telescope']=='LOT') & ((df_info['Object']==obj_name)|(df_info['Object'].str.contains(obj_name))) & (df_info['FilterName'].str.contains(filter_ID)) & (df_info['DateObs']>=date_from) & (df_info['DateObs']<=date_end)].index
 
 #print('obj_name: ', obj_name, type(obj_name))
 #print('filter_ID: ', filter_ID, type(filter_ID))
@@ -236,15 +232,15 @@ idx_fitsheader=idx_fitsheader_canfit
 
 label_source=[['']*n_refstar]*n_idx
 #print(label_source)
-Bmag_targets=np.array([0.]*n_idx)
-Bmag_err_targets=np.array([0.]*n_idx)
+Vmag_targets=np.array([0.]*n_idx)
+Vmag_err_targets=np.array([0.]*n_idx)
 SNR_targets=np.array([0.]*n_idx)
 #fwhm=np.array([0.]*n_idx)
-#d_bmag_fitting=np.zeros((n_idx,n_refstar-1))
+#d_vmag_fitting=np.zeros((n_idx,n_refstar-1))
 #radec_pix=np.array([[0.,0.]]*n_refstar)
 bkg_err=np.array([0.]*n_idx)
 bkg_err_ratio=np.array([0.]*n_idx)
-R_square_bmag=np.array([0.]*n_idx)
+R_square_vmag=np.array([0.]*n_idx)
 
 err_all=np.array([0.]*n_idx)
 #err_fitting_ratio=np.array([0.]*n_idx)
@@ -266,7 +262,7 @@ bg_subtracted_err=np.zeros((n_idx,n_refstar))
 bg_subtracted_sum_err=np.zeros((n_idx,n_refstar))
 #bg_subtracted_sum_err_p=np.zeros((n_idx,n_refstar))
 #bg_subtracted_sum_err_m=np.zeros((n_idx,n_refstar))
-bmag_fitting=np.zeros((n_idx,n_refstar))
+vmag_fitting=np.zeros((n_idx,n_refstar))
 mag_instrument=np.zeros((n_idx,n_refstar))
 mag_instrument_sum_err=np.zeros((n_idx,n_refstar))
 #mag_instrument_sum_err_p=np.zeros((n_idx,n_refstar))
@@ -282,7 +278,7 @@ JD=df_info['JD'][idx_fitsheader]
 #print(JD)
 ID=df_info['ID'][idx_fitsheader] 
 #print(ID)
-Telescope=df_info['Telescope'][idx_fitsheader]
+Telescope=df_info['Telescope'][idx_fitsheader] 
 #print(Telescope)
 
 #sys.exit(0)
@@ -301,8 +297,8 @@ for j2 in idx_refstar:
     ra_hhmmss[j1]=df_refstar['RefStarRA_hhmmss'][j2]
     dec_ddmmss[j1]=df_refstar['RefStarDEC_ddmmss'][j2]
 #    print(i,j1,radec_deg[j1],ra_hhmmss[j1],dec_ddmmss[j1])
-    bmag[j1]=df_refstar['Bmag'][j2]
-    bmag_err[j1]=df_refstar['Bmag_err'][j2]
+    vmag[j1]=df_refstar['Vmag'][j2]
+    vmag_err[j1]=df_refstar['Vmag_err'][j2]
     r_circle[j1]=df_refstar['R_circle_as'][j2]
     r_inner[j1]=df_refstar['R_inner_as'][j2]
     r_outer[j1]=df_refstar['R_outer_as'][j2]
@@ -348,7 +344,7 @@ for i in idx_fitsheader_canfit:
 
 #   sys.exit(0)
 #    print(radec_deg)
-#    print(bmag)
+#    print(vmag)
     date=fits_root.split('@',-1)[0].split('-',-1)[-1]
     year=date[0:4]
     month=date[4:6]
@@ -358,10 +354,10 @@ for i in idx_fitsheader_canfit:
     
     cmd_search_dir_cal='find ./'+yearmonth+' | grep '+fits_calib+' |cut -d / -f3' 
     dir_cal=os.popen(cmd_search_dir_cal,"r").read().splitlines()[0]
-#    dir_cal=yearmonth+'/slt'+date+'_calib_sci/'
-#    dir_cal=yearmonth+'/slt'+yearmonth+'_calib_sci/'
+#    dir_cal=yearmonth+'/LOT'+date+'_calib_sci/'
+#    dir_cal=yearmonth+'/LOT'+yearmonth+'_calib_sci/'
     print('dir_cal : ', dir_cal)
-#    dir_reg=yearmonth+'/slt'+date+'_reg/'
+#    dir_reg=yearmonth+'/LOT'+date+'_reg/'
     hdu=fits.open(yearmonth+'/'+dir_cal+'/'+fits_calib)[0]
     imhead=hdu.header
     imdata=hdu.data    
@@ -474,11 +470,6 @@ for i in idx_fitsheader_canfit:
 #        phot_annu_table['bg_subtracted_sum[k][j1]_err'] = bg_subtracted_sum[k][j1]
 #        print(phot_annu_table)        
         mag_instrument[k][j1]=-2.5*np.log10(bg_subtracted_sum[k][j1])
-#        if bg_subtracted_sum[k][j1]>0:            
-#            mag_instrument[k][j1]=-2.5*np.log10(bg_subtracted_sum[k][j1])
-#        else:
-#            bmag_uplims[j1]=True
-#            mag_instrument[k][j1]=-2.5*np.log10(bkg_sum)
         print('... mag_instrument (sum) =','%.4f' %mag_instrument[k][j1])        
         bg_subtracted_sum_err[k][j1]=bg_subtracted_sum[k][j1]+bg_subtracted_err[k][j1]
         mag_instrument_sum_err[k][j1]=-2.5*np.log10(bg_subtracted_sum_err[k][j1])
@@ -495,8 +486,6 @@ for i in idx_fitsheader_canfit:
 #    print(phot_annu_table.colnames)
     print('=================================')
 
- 
-
 #    print('bg_subtracted_err[k]')
 #    print(bg_subtracted_err[k])
     err_count_per_img[k]=np.sqrt(sum(bg_subtracted_err[k]**2)/n_refstar)
@@ -507,25 +496,22 @@ for i in idx_fitsheader_canfit:
 
     print('Instrument Mag of FU_Ori',mag_instrument[k][0])
 #    print('Instrument Mag of RefStars',mag_instrument[k][1:])
-
-#    print('Instrument Mag of RefStars',mag_instrument[k][1:])
-#    print('Bmag of RefStars',bmag[1:])    
     print()
-#    shift,slope=polyfit(mag_instrument[k][1:],bmag[1:],1)
 
-    shift,slope=polyfit(mag_instrument[k][1:],bmag[1:],1,w=1/(mag_instrument_err[k][1:]))
-#    shift,slope=polyfit(mag_instrument[k][1:],bmag[1:],1)
-    param,res=polyfit(mag_instrument[k][1:],bmag[1:],1,w=1/(mag_instrument_err[k][1:]),full=True)
-#    param,res=polyfit(mag_instrument[k][1:],bmag[1:],1,full=True)
+#    shift,slope=polyfit(mag_instrument[k][1:],vmag[1:],1)
+    shift,slope=polyfit(mag_instrument[k][1:],vmag[1:],1,w=1/(mag_instrument_err[k][1:]))
+#    shift,slope=polyfit(mag_instrument[k][1:],vmag[1:],1)
+    param,res=polyfit(mag_instrument[k][1:],vmag[1:],1,w=1/(mag_instrument_err[k][1:]),full=True)
+#    param,res=polyfit(mag_instrument[k][1:],vmag[1:],1,full=True)
     res_least_sq_fit=res[0]
     print('... residual least squre fitting',res_least_sq_fit)
 
 
-    bmag_fitting[k]=shift+slope*mag_instrument[k]
-    print('... bmag_fitting (Ref.Stars only):',bmag_fitting[k][1:])
-    print('... bmag_fitting (Target only):',bmag_fitting[k][0])
+    vmag_fitting[k]=shift+slope*mag_instrument[k]
+    print('... vmag_fitting (Ref.Stars only):',vmag_fitting[k][1:])
+    print('... vmag_fitting (Target only):',vmag_fitting[k][0])
     
-    Bmag_targets[k]=bmag_fitting[k][0]
+    Vmag_targets[k]=vmag_fitting[k][0]
     
     figtitle=str(Telescope[i])+' (ID='+str(ID[i])+', JD='+str('%.0f' %JD[i])+') '+fits_ori[i]
 
@@ -537,9 +523,6 @@ for i in idx_fitsheader_canfit:
   
     norm = simple_norm(imdata, 'sqrt', percent=99)
     plt.imshow(imdata, norm=norm)
-#    im=axs[0].imshow(imdata,original='lower',norm=norm)
-#    fig1.colorbar(im)
-#    axs[0].plot(imdata)
     
     for i in range(n_refstar):
         aper_annu_pix[i].plot(color='black', lw=1)      
@@ -564,41 +547,41 @@ for i in idx_fitsheader_canfit:
     plt.xticks(fontsize=font_small)
     plt.yticks(fontsize=font_small)    
 #    plt.title(figtitle,fontsize=font_small)
-    text_bmag='Bmag='+str('%.3f' %bmag_fitting[k][0])
+    text_vmag='Vmag='+str('%.3f' %vmag_fitting[k][0])
 
     plt.subplot(122,aspect=0.5)
 
     
-    d_bmag_fitting=bmag[1:]-bmag_fitting[k][1:]
-    print('... fitting residual:',d_bmag_fitting)
+    d_vmag_fitting=vmag[1:]-vmag_fitting[k][1:]
+    print('... fitting residual:',d_vmag_fitting)
 
-    err_mag_fitting_per_img[k]=np.sqrt(sum(d_bmag_fitting**2)/n_refstar)    
+    err_mag_fitting_per_img[k]=np.sqrt(sum(d_vmag_fitting**2)/n_refstar)    
     print('... fitting error (mag) =','%.4f' %err_mag_fitting_per_img[k])
 #    print('measurement error (mag)',bkg_err[k])    
-#    SSregression_bmag=sum((bmag_fitting[k][1:]-np.mean(bmag[1:]))**2)
-    SSE_bmag=sum((d_bmag_fitting)**2)
-    SST_bmag=sum((bmag[1:]-np.mean(bmag[1:]))**2)
-    R_square_bmag[k]=1-SSE_bmag/SST_bmag
+#    SSregression_vmag=sum((vmag_fitting[k][1:]-np.mean(vmag[1:]))**2)
+    SSE_vmag=sum((d_vmag_fitting)**2)
+    SST_vmag=sum((vmag[1:]-np.mean(vmag[1:]))**2)
+    R_square_vmag[k]=1-SSE_vmag/SST_vmag
     print('... error of measurement (ratio of bkg_std/bkg_mediean) =','%.4f' %bkg_err_ratio[k])
     err_mag_total_per_img[k]=np.sqrt((err_mag_fitting_per_img[k])**2+(err_mag_instrument_per_img[k])**2)
     print('... error of (calibration + observation) [mag]:','%.4f' %err_mag_total_per_img[k])
-    text_fitting='Bmag='+str('%.2f' %shift)+'+'+str('%.2f' %slope)+'*(Inst.Mag), $R^2$='+str('%.4f' %R_square_bmag[k])
-    label_target=obj_name+', Bmag='+str('%.2f' %bmag_fitting[k][0])+'$\pm$'+str('%.2f' %err_mag_total_per_img[k])
+    text_fitting='Vmag='+str('%.2f' %shift)+'+'+str('%.2f' %slope)+'*(Inst.Mag), $R^2$='+str('%.4f' %R_square_vmag[k])
+    label_target=obj_name+', Vmag='+str('%.2f' %vmag_fitting[k][0])+'$\pm$'+str('%.2f' %err_mag_total_per_img[k])
     for i in range(n_refstar):
-        label_source[k][i]=obj_name+', Bmag='+str('%.2f' %bmag_fitting[k][i])
+        label_source[k][i]=obj_name+', Vmag='+str('%.2f' %vmag_fitting[k][i])
     print('label_source[k]',label_source[k])
-#    label_source[k]=obj_name+', Bmag='+str('%.2f' %bmag_fitting[k])
-    plt.plot(mag_instrument[k],bmag_fitting[k],'-',color='grey',label=text_fitting)
-    plt.errorbar(mag_instrument[k][1:],bmag[1:],yerr=mag_instrument_err[k][1:],fmt='o',label='Reference Stars')     
-#    plt.plot(mag_instrument[k][0],bmag_fitting[k][0],'o',color='red',label=label_target)
-#    plt.errorbar(mag_instrument[k][0],bmag_fitting[k][0],yerr=err_mag_fitting_per_img[k],fmt='o',color='red',label=label_target)
-    plt.errorbar(mag_instrument[k][0],bmag_fitting[k][0],yerr=mag_instrument_err[k][0],fmt='o',color='red',label=label_target)
+#    label_source[k]=obj_name+', Vmag='+str('%.2f' %vmag_fitting[k])
+    plt.plot(mag_instrument[k],vmag_fitting[k],'-',color='grey',label=text_fitting)
+    plt.errorbar(mag_instrument[k][1:],vmag[1:],yerr=mag_instrument_err[k][1:],fmt='o',label='Reference Stars')     
+#    plt.plot(mag_instrument[k][0],vmag_fitting[k][0],'o',color='red',label=label_target)
+#    plt.errorbar(mag_instrument[k][0],vmag_fitting[k][0],yerr=err_mag_fitting_per_img[k],fmt='o',color='red',label=label_target)
+    plt.errorbar(mag_instrument[k][0],vmag_fitting[k][0],yerr=mag_instrument_err[k][0],fmt='o',color='red',label=label_target)
 
     print('... bg_subtracted_sum =',bg_subtracted_sum[k][j1])
 
 
     xx=mag_instrument[k]
-    yy=bmag_fitting[k]
+    yy=vmag_fitting[k]
     xxmin=min(xx)
     xxmax=max(xx)
     yymin=min(yy)
@@ -606,15 +589,15 @@ for i in idx_fitsheader_canfit:
     xxwidth=abs(xxmin-xxmax)
     yywidth=abs(yymin-yymax)
 #    xxrange=range(int(xxmin*10),int(xxmax*10),5)
-    print('... InstMag_width =','%.2f' %xxwidth,', Bmag_width =','%.2f' %yywidth)
+    print('... InstMag_width =','%.2f' %xxwidth,', Vmag_width =','%.2f' %yywidth)
     
     for i in range(n_refstar):
         if i==0:
             plt.text((xx[i]-0.01*xxwidth),(yy[i]+0.05*yywidth),str(refstarID[i]),fontsize=font_small,color='red')
         else:
-            plt.text((xx[i]-0.01*xxwidth),(bmag[i]),str(refstarID[i]),fontsize=font_small,color='steelblue')
+            plt.text((xx[i]-0.01*xxwidth),(vmag[i]),str(refstarID[i]),fontsize=font_small,color='steelblue')
     plt.xlabel('Instrument Mag',fontsize=font_small)
-    plt.ylabel('Bmag',fontsize=font_small)
+    plt.ylabel('Vmag',fontsize=font_small)
 #    plt.title(figtitle,fontsize=font_small)
 #    plt.xticks(np.arange(min(xx)-1,max(xx)+1,0.5),fontsize=font_small)
 #    plt.yticks(np.arange(min(yy)-1,max(yy)+1,0.5),fontsize=font_small)
@@ -625,10 +608,10 @@ for i in idx_fitsheader_canfit:
 
     plt.legend(loc='lower left',bbox_to_anchor=(0.0,1.02),fontsize=font_small)
 #    plt.legend(loc='upper left', bbox_to_anchor=(-0.,1.65),fontsize=font_small)
-#    plt.savefig(dir_obj+'Bmag_InsMag_bmag_'+obj_name+'_annu_'+date+'_'+str(k)+'.png')
-    plt.savefig(dir_obj+'Bmag_InsMag_'+obj_name+'_annu_'+date+'_'+str(k+1)+'.png',dpi=200)    
+#    plt.savefig(dir_obj+'Vmag_InsMag_vmag_'+obj_name+'_annu_'+date+'_'+str(k)+'.png')
+    plt.savefig(dir_obj+'Vmag_InsMag_'+obj_name+'_annu_'+date+'_'+str(k+1)+'.png',dpi=200)    
     plt.close()    
-#    print('target new Bmag =',bmag_fitting[k][0])
+#    print('target new Vmag =',vmag_fitting[k][0])
 #    print('Instrument Mag',mag_instrument)
 #    print('=================================')
     k=k+1
@@ -637,18 +620,17 @@ for i in idx_fitsheader_canfit:
 
 #print('=================================')
 print()    
-print('Bmag',Bmag_targets)
+print('Vmag',Vmag_targets)
 print()   
 
 df_out=df_info.iloc[idx_fitsheader_canfit]
 pd.options.mode.chained_assignment = None  # default='warn'
-df_out['Telescope']=Telescope
 df_out['JD']=df_out['JD'].map('{:.5f}'.format)
-#df_out['Bmag']=pd.Series(Bmag_targets,index=df_out.index)
-df_out['Bmag']=Bmag_targets
-df_out['Bmag']=df_out['Bmag'].map('{:.4f}'.format)
-df_out['ErrorBmag']=err_mag_total_per_img
-df_out['ErrorBmag']=df_out['ErrorBmag'].map('{:.4f}'.format)
+#df_out['Vmag']=pd.Series(Vmag_targets,index=df_out.index)
+df_out['Vmag']=Vmag_targets
+df_out['Vmag']=df_out['Vmag'].map('{:.4f}'.format)
+df_out['ErrorVmag']=err_mag_total_per_img
+df_out['ErrorVmag']=df_out['ErrorVmag'].map('{:.4f}'.format)
 df_out['Counts']=bg_subtracted_sum[:,0]
 df_out['Counts']=df_out['Counts'].map('{:.4f}'.format)
 df_out['ErrorCounts']=err_count_per_img
@@ -664,11 +646,7 @@ df_out['InstMag_A']=mag_instrument[:,1]
 df_out['InstMag_A']=df_out['InstMag_A'].map('{:.4f}'.format)
 df_out['InstMag_B']=mag_instrument[:,2]
 df_out['InstMag_B']=df_out['InstMag_B'].map('{:.4f}'.format)
-df_out['InstMag_C']=mag_instrument[:,3]
-df_out['InstMag_C']=df_out['InstMag_C'].map('{:.4f}'.format)
-df_out['InstMag_D']=mag_instrument[:,4]
-df_out['InstMag_D']=df_out['InstMag_D'].map('{:.4f}'.format)
-df_out['InstMag_E']=mag_instrument[:,5]
+df_out['InstMag_E']=mag_instrument[:,3]
 df_out['InstMag_E']=df_out['InstMag_E'].map('{:.4f}'.format)
 
 
@@ -677,19 +655,19 @@ df_out['InstMag_E']=df_out['InstMag_E'].map('{:.4f}'.format)
 
 #fmt="{:,.4f}"  # 1,234
 #fmt="{:.4f}"  # 1234
-#df_out.style.format({'RA_deg':fmt,'DEC_deg':fmt,'RA_pix':fmt,'DEC_pix':fmt,'Zmag':fmt,'FWHM':fmt,'Altitude':fmt,'Airmass':fmt,'Bmag':fmt,'ErrorCounts':fmt,'ErrorInstMag':fmt,'ErrorFitting':fmt,'ErrorMagTotal':fmt})
-#df_out.style.format({'Bmag':fmt,'ErrorCounts':fmt,'ErrorInstMag':fmt,'ErrorFitting':fmt,'ErrorMagTotal':fmt})
+#df_out.style.format({'RA_deg':fmt,'DEC_deg':fmt,'RA_pix':fmt,'DEC_pix':fmt,'Zmag':fmt,'FWHM':fmt,'Altitude':fmt,'Airmass':fmt,'Vmag':fmt,'ErrorCounts':fmt,'ErrorInstMag':fmt,'ErrorFitting':fmt,'ErrorMagTotal':fmt})
+#df_out.style.format({'Vmag':fmt,'ErrorCounts':fmt,'ErrorInstMag':fmt,'ErrorFitting':fmt,'ErrorMagTotal':fmt})
 
 print(df_out)
-file_Bmag_out_full=dir_obj+'Bmag_aperture_'+obj_name+'_annu.txt'
-df_out.to_csv(file_Bmag_out_full,sep='|')
-print('... write file to: ./'+file_Bmag_out_full)
+file_Vmag_out_full=dir_obj+'Vmag_aperture_'+obj_name+'_annu.txt'
+df_out.to_csv(file_Vmag_out_full,sep='|')
+print('... write file to: ./'+file_Vmag_out_full)
 
 # -----------------------------------
-df_Bmag=df_out[['JD','Bmag','ErrorBmag']].reset_index(drop=True)
-file_Bmag_out_simple=dir_obj+'Bmag_'+obj_name+'_all.txt'
-df_Bmag.to_csv(file_Bmag_out_simple,sep=',')
-print('... write file to: ./'+file_Bmag_out_simple)
+df_Vmag=df_out[['JD','Vmag','ErrorVmag']].reset_index(drop=True)
+file_Vmag_out_simple=dir_obj+'Vmag_'+obj_name+'_all.txt'
+df_Vmag.to_csv(file_Vmag_out_simple,sep=',')
+print('... write file to: ./'+file_Vmag_out_simple)
 # -----------------------------------
 #=======================
 
@@ -752,11 +730,11 @@ df_out_keep=df_out_keep[~df_out_keep['ID'].isin(ID_skip)]
 print(df_out_keep)
 n_out_keep=len(df_out_keep)
 # -----------------------------------
-df_Bmag_keep=df_out_keep[['JD','Bmag','ErrorBmag']].astype(float) #.reset_index(drop=True)
+df_Vmag_keep=df_out_keep[['JD','Vmag','ErrorVmag']].astype(float) #.reset_index(drop=True)
 
-JD_out_keep=df_Bmag_keep['JD'].map('{:.5f}'.format)
-Bmag_out_keep=df_Bmag_keep['Bmag'].map('{:.3f}'.format)
-eBmag_out_keep=df_Bmag_keep['ErrorBmag'].map('{:.3f}'.format)
+JD_out_keep=df_Vmag_keep['JD'].map('{:.5f}'.format)
+Vmag_out_keep=df_Vmag_keep['Vmag'].map('{:.3f}'.format)
+eVmag_out_keep=df_Vmag_keep['ErrorVmag'].map('{:.3f}'.format)
 
 
 iau_name=df_refstar.loc[df_refstar['ObjectName']==obj_name].iloc[0]['IAU_Name']
@@ -773,38 +751,26 @@ print(date_format)
 
 filter_ID_lower=str.lower(filter_ID)
 
-file_Bmag_out_keep=dir_obj+'g'+iau_name_short+filter_ID_lower+'_LuS_'+date_format+'.dat'
-f_out=open(file_Bmag_out_keep,"w+")
+file_Vmag_out_keep=dir_obj+'g'+iau_name_short+filter_ID_lower+'_LuS_'+date_format+'.dat'
+f_out=open(file_Vmag_out_keep,"w+")
 
 for i in range(n_out_keep):
     j=JD_out_keep.index[i]
-    data_row=' '+str(JD_out_keep[j])+'   '+str(Bmag_out_keep[j])+'   '+str(eBmag_out_keep[j])+'   Lulin (SLT)\n'
+    data_row=' '+str(JD_out_keep[j])+'   '+str(Vmag_out_keep[j])+'   '+str(eVmag_out_keep[j])+'   Lulin (LOT)\n'
     f_out.write(data_row)    
 
 f_out.close()    
 
 # -----------------------------------
 
-print('... write file to: ./'+file_Bmag_out_keep)
+print('... write file to: ./'+file_Vmag_out_keep)
 
 
 # -----------------------------------
 #JD_keep=df_out_keep['JD']
-#Bmag_keep=df_out_keep['Bmag']
-#ErrorBmag=df_out_keep['ErrorBmag']
+#Vmag_keep=df_out_keep['Vmag']
+#ErrorVmag=df_out_keep['ErrorVmag']
 # -----------------------------------
-#sys.exit(0)
-
-file_Bmag_annu=dir_obj+'Bmag_aperture_FU_Ori_annu.txt'
-df_Bmag_annu=pd.read_csv(file_Bmag_annu,delimiter='|')
-
-idx_Bmag_annu_LOT=df_Bmag_annu[(df_Bmag_annu['Telescope']=='LOT')].index
-print('idx_Bmag_annu_LOT',idx_Bmag_annu_LOT)
-
-JD_LOT=df_Bmag_annu['JD'][idx_Bmag_annu_LOT]
-print('JD_LOT',JD_LOT)
-bmag_fitting_LOT=df_Bmag_annu['Bmag'][idx_Bmag_annu_LOT]
-print('bmag_fitting_LOT',bmag_fitting_LOT)
 #sys.exit(0)
 
 
@@ -822,35 +788,30 @@ plt.subplots_adjust(right=0.75)
 
 
 #plt.figure()
-#plt.scatter(JD,Bmag_targets,label='data')
+#plt.scatter(JD,Vmag_targets,label='data')
 
 
 for i in range(n_refstar):
     print(i)
     print(JD.tolist())
-    print(bmag_fitting[:,i]) 
-#    plt.scatter(JD,bmag_fitting[:,i]) # ,fmt='o')
-#    plt.scatter(JD,bmag_fitting[:,i],label=str(refstarID[i]),marker='o')
-#    plt.plot(JD,bmag_fitting[:,i],label=str(refstarID[i]),fmt='o')
-#    plt.plot(JD,bmag_fitting[:,i],label=label_source[:,i],fmt='o')
+    print(vmag_fitting[:,i]) 
     if i==0:
         print('i=',i)
-        plt.errorbar(JD,bmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='.',color='red',linestyle='none')
-        plt.scatter(JD_LOT,bmag_fitting_LOT)
-#        plt.errorbar(JD,bmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='o',color='red',linestyle='none',fmt='+', mfc='white')
-#	plt.errorbar(JD,Bmag_targets,yerr=err_mag_total_per_img,label=label_target,fmt='o')
+        plt.errorbar(JD,vmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='.',color='red',linestyle='none')
+#        plt.errorbar(JD,vmag_fitting[:,i],yerr=err_mag_total_per_img,label=str(refstarID[i]),marker='o',color='red',linestyle='none',fmt='+', mfc='white')
+#	plt.errorbar(JD,Vmag_targets,yerr=err_mag_total_per_img,label=label_target,fmt='o')
     else:
         print('i=',i)
-        plt.axhline(y=bmag[i],color=colors[i],lw=1)
-#        plt.axhline(y=bmag[i]-0.1,color=colors[i],linestyle='--',lw=1)
-#        plt.axhline(y=bmag[i]+0.1,color=colors[i],linestyle='--',lw=1)
-        plt.scatter(JD,bmag_fitting[:,i],label=str(refstarID[i]),marker=markers[i],color=colors[i],facecolors='none')
+        plt.axhline(y=vmag[i],color=colors[i],lw=1)
+#        plt.axhline(y=vmag[i]-0.1,color=colors[i],linestyle='--',lw=1)
+#        plt.axhline(y=vmag[i]+0.1,color=colors[i],linestyle='--',lw=1)
+        plt.scatter(JD,vmag_fitting[:,i],label=str(refstarID[i]),marker=markers[i],color=colors[i],facecolors='none')
+        
         
 
-#plt.plot(JD,Bmag_targets,'-')
         
 #axs[0].set_xlabel('JD',fontsize=font_small)
-plt.ylabel('Bmag',fontsize=font_small)
+plt.ylabel('Vmag',fontsize=font_small)
 plt.gca().invert_yaxis()
 #axs[0].set_title(obj_name) #,fontsize=font_small)
 plt.xticks(fontsize=font_small)
@@ -863,15 +824,15 @@ plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 #axs[0].tight_layout()
 #axs[0].subplots_adjust(right=0.75) 
 #plt.show()
-#plt.savefig(dir_obj+'Bmag_JD_'+obj_name+'_RefStar_annu.png')
+#plt.savefig(dir_obj+'Vmag_JD_'+obj_name+'_RefStar_annu.png')
 #plt.close()
 #sys.exit(0)
 # -----------------------------------
 plt.subplot(312) #,sharex=ax1)
-plt.errorbar(JD,Bmag_targets,yerr=err_mag_total_per_img,label=obj_name,fmt='.',color='red')
+plt.errorbar(JD,Vmag_targets,yerr=err_mag_total_per_img,label=obj_name,fmt='.',color='red')
 
 #plt.xlabel('JD',fontsize=font_small)
-plt.ylabel('Bmag',fontsize=font_small)
+plt.ylabel('Vmag',fontsize=font_small)
 plt.gca().invert_yaxis()
 #axs[1].set_title(obj_name) #,fontsize=font_small)
 plt.xticks(fontsize=font_small)
@@ -883,18 +844,18 @@ plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.subplot(313)
 #plt.figure(figsize=(8,6))
 #plt.figure()
-#plt.plot(JD,Bmag_targets,'-',label='lightcurve',color='grey')
-#plt.scatter(JD,Bmag_targets,label='data')
-JD_keep=df_Bmag_keep['JD'] #.tolist()
-Bmag_targets_keep=df_Bmag_keep['Bmag'] #.tolist()
-err_mag_total_per_img_keep=df_Bmag_keep['ErrorBmag'] #.tolist()
-#plt.scatter(JD_keep,Bmag_targets_keep,marker='.',color='red') #,label=obj_name,fmt='.',color='red')
+#plt.plot(JD,Vmag_targets,'-',label='lightcurve',color='grey')
+#plt.scatter(JD,Vmag_targets,label='data')
+JD_keep=df_Vmag_keep['JD'] #.tolist()
+Vmag_targets_keep=df_Vmag_keep['Vmag'] #.tolist()
+err_mag_total_per_img_keep=df_Vmag_keep['ErrorVmag'] #.tolist()
+#plt.scatter(JD_keep,Vmag_targets_keep,marker='.',color='red') #,label=obj_name,fmt='.',color='red')
 
-plt.errorbar(JD_keep,Bmag_targets_keep,yerr=err_mag_total_per_img_keep,label=obj_name,fmt='.',color='red')
+plt.errorbar(JD_keep,Vmag_targets_keep,yerr=err_mag_total_per_img_keep,label=obj_name,fmt='.',color='red')
 
 
 plt.xlabel('JD',fontsize=font_small)
-plt.ylabel('Bmag',fontsize=font_small)
+plt.ylabel('Vmag',fontsize=font_small)
 plt.gca().invert_yaxis()
 #axs[1].set_title(obj_name) #,fontsize=font_small)
 plt.xticks(fontsize=font_small)
@@ -903,8 +864,8 @@ plt.yticks(fontsize=font_small)
 plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
 #plt.show()
-plt.savefig(dir_obj+'Bmag_JD_'+obj_name+'_RefStar_annu.png',dpi=200)
-plt.savefig(dir_obj+'Bmag_JD_'+obj_name+'_RefStar_annu.pdf')
+plt.savefig(dir_obj+'Vmag_JD_'+obj_name+'_RefStar_annu.png',dpi=200)
+plt.savefig(dir_obj+'Vmag_JD_'+obj_name+'_RefStar_annu.pdf')
 
 plt.close()
 #sys.exit(0)
@@ -914,21 +875,21 @@ plt.close()
 # -----------------------------------
 
 
-bmag_nan=([])
+vmag_nan=([])
 
 k=0
 for i in idx_fitsheader_keep:
     ID_fitsheader=ID[i]
-    if Bmag_targets[k]==np.nan:
-        bmag_nan=np.append(bmag_nan,ID_fitsheader)
+    if Vmag_targets[k]==np.nan:
+        vmag_nan=np.append(vmag_nan,ID_fitsheader)
     k=k+1
 
 print()
-print('Bmag with nan value:',bmag_nan)
+print('Vmag with nan value:',vmag_nan)
 print()
-print('... write file to: ./'+file_Bmag_out_full)
-print('... write file to: ./'+file_Bmag_out_simple)
-print('... write file to: ./'+file_Bmag_out_keep)
+print('... write file to: ./'+file_Vmag_out_full)
+print('... write file to: ./'+file_Vmag_out_simple)
+print('... write file to: ./'+file_Vmag_out_keep)
 
 print('... finished ...')
 #==============================

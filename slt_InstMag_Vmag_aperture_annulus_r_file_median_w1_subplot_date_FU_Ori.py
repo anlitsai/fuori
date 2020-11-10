@@ -67,7 +67,7 @@ print(date)
 print(type(date))
 yearmonth=date[0:6]
 '''
-#filter_name='R_Astrodon_2018'
+#filter_name='V_Astrodon_2018'
 filter_ID='V'
 #filter_ID=sys.argv[1]
 
@@ -94,7 +94,7 @@ print('obj_name : ', obj_name)
 
 
 #dir_obj=filter_ID+'mag_InstMag/annu_w1_'+date1+'-'+date2+'/*'+obj_name+'/'
-dir_obj='slt_InstMag_'+filter_ID+'mag/annu_w1_'+date1+'-'+date2+'/'+obj_name+'/'
+dir_obj='slt_InstMag_'+filter_ID+'mag/'
 
 print('... will generate files in: ./'+dir_obj)
 if os.path.exists(dir_obj):
@@ -278,6 +278,8 @@ JD=df_info['JD'][idx_fitsheader]
 #print(JD)
 ID=df_info['ID'][idx_fitsheader] 
 #print(ID)
+Telescope=df_info['Telescope'][idx_fitsheader] 
+#print(Telescope)
 
 #sys.exit(0)
 #=======================
@@ -511,7 +513,7 @@ for i in idx_fitsheader_canfit:
     
     Vmag_targets[k]=vmag_fitting[k][0]
     
-    figtitle='(ID='+str(ID[i])+', JD='+str('%.0f' %JD[i])+') '+fits_ori[i]
+    figtitle=str(Telescope[i])+' (ID='+str(ID[i])+', JD='+str('%.0f' %JD[i])+') '+fits_ori[i]
 
             
     fig1=plt.figure(figsize=(8,4))

@@ -94,7 +94,7 @@ print('obj_name : ', obj_name)
 
 
 #dir_obj=filter_ID+'mag_InstMag/annu_w1_'+date1+'-'+date2+'/*'+obj_name+'/'
-dir_obj='InstMag_'+filter_ID+'mag/'
+dir_obj='ABDE_InstMag_'+filter_ID+'mag/annu_w1_'+date1+'-'+date2+'/'+obj_name+'/'
 
 print('... will generate files in: ./'+dir_obj)
 if os.path.exists(dir_obj):
@@ -103,7 +103,7 @@ os.makedirs(dir_obj,exist_ok=True)
 
 #dir_refstar='RefStar/'
 #file_refstar='slt_refStar_radec_annu_test.txt'
-file_refstar='slt_refStar_radec_annu.txt'
+file_refstar='slt_refStar_radec_annu_ABDE.txt'
 
 df_refstar=pd.read_csv(file_refstar,sep='|')
 #print(df_refstar)
@@ -664,11 +664,9 @@ df_out['InstMag_A']=mag_instrument[:,1]
 df_out['InstMag_A']=df_out['InstMag_A'].map('{:.4f}'.format)
 df_out['InstMag_B']=mag_instrument[:,2]
 df_out['InstMag_B']=df_out['InstMag_B'].map('{:.4f}'.format)
-df_out['InstMag_C']=mag_instrument[:,3]
-df_out['InstMag_C']=df_out['InstMag_C'].map('{:.4f}'.format)
-df_out['InstMag_D']=mag_instrument[:,4]
+df_out['InstMag_D']=mag_instrument[:,3]
 df_out['InstMag_D']=df_out['InstMag_D'].map('{:.4f}'.format)
-df_out['InstMag_E']=mag_instrument[:,5]
+df_out['InstMag_E']=mag_instrument[:,4]
 df_out['InstMag_E']=df_out['InstMag_E'].map('{:.4f}'.format)
 
 

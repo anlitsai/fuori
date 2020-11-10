@@ -1,0 +1,16 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(5:45:22.316,+9:04:11.00,25") # color=white text={FU_Ori}
+annulus(5:45:22.316,+9:04:11.00,30",35") # text={FU_Ori}
+circle(5:45:42.357,+9:07:46.73,10") # color=red text={A}
+annulus(5:45:42.357,+9:07:46.73,15",20") # text={A}
+circle(5:45:28.873,+9:01:44.15,10") # color=red text={B}
+annulus(5:45:28.873,+9:01:44.15,15",20") # text={B}
+circle(5:45:21.561,+8:58:40.61,10") # color=red text={C}
+annulus(5:45:21.561,+8:58:40.61,15",20") # text={C}
+circle(5:45:13.884,+9:04:44.11,10") # color=red text={D}
+annulus(5:45:13.884,+9:04:44.11,15",20") # text={D}
+circle(5:45:02.521,+9:03:49.47,10") # color=red text={E}
+annulus(5:45:02.521,+9:03:49.47,15",20") # text={E}
+box(5:45:21.992,+9:04:10.39,790.92",790.151",358.984)
