@@ -4,4 +4,9 @@ FU_Ori-20201007@185500-R_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185651-R_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185430-V_Astrodon_2018_calib.fits	2	moon
 FU_Ori-20201007@185621-V_Astrodon_2018_calib.fits	2	moon
+FU_Ori-20201005@173735-B_Astrodon_2018_calib.fits	2	bigerror,badfit,faint(B=11.66,dB=0.28)
+FU_Ori-20201006@185127-B_Astrodon_2018_calib.fits	2	bigerror,badfit,faint(B=11.89,dB=0.24)
+FU_Ori-20201007@185330-B_Astrodon_2018_calib.fits	2	bigerror,badfit,moon(B=11.12,dB=0.20)
+FU_Ori-20201007@185525-B_Astrodon_2018_calib.fits	2	bigerror,badfit,moon(B=11.76,dB=0.20)
+
 
