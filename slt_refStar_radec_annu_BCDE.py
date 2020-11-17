@@ -112,7 +112,7 @@ df_list_recommend['Vmag_err']=df_list_recommend['Vmag_err'].map('{:.3f}'.format)
 
 print(df_list_recommend)
 
-file_list_out='slt_refStar_radec_annu_ABDE.txt'
+file_list_out='slt_refStar_radec_annu_BCDE.txt'
 df_list_recommend.to_csv(file_list_out,sep='|')
 
 print('... write file to: ./'+file_list_out)

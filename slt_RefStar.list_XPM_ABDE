@@ -1,0 +1,11 @@
+# http://www.oato.inaf.it/blazars/webt/gasp/list.html
+# LOT fitsimage @ds9 : invert Y, rotate 90deg or 270deg
+# ds9 region files: RefStars_ObjectName_fk5.reg
+IAU_Name	ObjectName	RA_hhmmss	DEC_ddmmss	Redshift	RefStarID	Bmag	Bmag_err	Vmag	Vmag_err	Rmag	Rmag_err	NoteIdx	Note
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	FU_Ori	-9999	-9999	-9999	-9999	-9999	-9999	0	star
+FU_Orions	FU_Ori	05:45:42.357	+09:07:46.73	0.000	A	14.600	0.002	13.226	0.002	12.100	0.002	1	recommend;I/319/xpm;XPMCatalog(Fedorov+2011)
+FU_Orions	FU_Ori	05:45:28.873	+09:01:44.15	0.000	B	14.600	0.002	12.729	0.002	11.600	0.002	1	recommend;I/319/xpm;XPMCatalog(Fedorov+2011)
+FU_Orions	FU_Ori	05:45:21.561	+08:58:40.61	0.000	C	14.100	0.002	14.039	0.002	13.900	0.002	3	notrecommend;I/319/xpm;XPMCatalog(Fedorov+2011)
+FU_Orions	FU_Ori	05:45:13.884	+09:04:44.11	0.000	D	14.600	0.002	13.178	0.002	12.300	0.002	1	recommend;I/319/xpm;XPMCatalog(Fedorov+2011)
+FU_Orions	FU_Ori	05:45:02.521	+09:03:49.47	0.000	E	13.900	0.002	12.782	0.002	11.900	0.002	1	recommend;I/319/xpm;XPMCatalog(Fedorov+2011)
+FU_Orions	FU_Ori	05 45 22.3	+09 04 11	0.000	bkg	-9999	-9999	-9999	-9999	-9999	-9999	-1	background
