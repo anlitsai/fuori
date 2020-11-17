@@ -59,6 +59,7 @@ for i in range(n_data):
 
 
 plt.savefig('FU_Orion_plot.pdf') 
+plt.savefig('FU_Orion_plot.png') 
 
 print("... save file as FU_Orion_plot.pdf ...")
     
