@@ -21,7 +21,7 @@ nn=30
 
 obj_name='FU Orion'
 filter_ID=['B','V','R']
-list_data=['./BCDE_slt_InstMag_Bmag/Bmag_FU_Ori_all.txt','./BCDE_slt_InstMag_Vmag/Vmag_FU_Ori_all.txt','./BCDE_slt_InstMag_Rmag/Rmag_FU_Ori_all.txt']
+list_data=['./XPM/BCDE_slt_InstMag_Bmag/Bmag_FU_Ori_all.txt','./XPM/BCDE_slt_InstMag_Vmag/Vmag_FU_Ori_all.txt','./XPM/BCDE_slt_InstMag_Rmag/Rmag_FU_Ori_all.txt']
 filter_mag=['Bmag','Vmag','Rmag']
 filter_err=['ErrorBmag','ErrorVmag','ErrorRmag']
 
