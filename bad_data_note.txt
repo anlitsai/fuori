@@ -9,3 +9,4 @@ FU_Ori-20201006@185127-B_Astrodon_2018_calib.fits	2	bigerror,badfit,faint(B=11.8
 FU_Ori-20201007@185330-B_Astrodon_2018_calib.fits	2	bigerror,badfit,moon(B=11.12,dB=0.20)
 FU_Ori-20201007@185525-B_Astrodon_2018_calib.fits	2	bigerror,badfit,moon(B=11.76,dB=0.20)
 
+
