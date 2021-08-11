@@ -4,7 +4,7 @@ $ condaa
 # activate conda
 
 $ python search_no_wcs_FUOri.py 202010
-$ python slt_calibration_master_1month.py  
+$ python slt_calibration_master_1month.py
 $ python slt_calibration_science_calibration_FUOri.py
 $ vi RefStar_FUOri_annu_mod_fk5.reg
 $ python slt_refStar_radec_annu.py
